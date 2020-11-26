@@ -60,6 +60,7 @@ import android.provider.MediaStore.Images.Media.DATE_TAKEN
 import android.provider.MediaStore.Images.Media.DATA
 import android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 import android.widget.Toast.LENGTH_LONG
+import androidx.core.os.bundleOf
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
@@ -87,8 +88,7 @@ class CollageFragment : Fragment(), View.OnClickListener {
     fun newInstance(templateType: TemplateType): CollageFragment {
       val fragment = CollageFragment()
       // 1 Create a Bundle object and Add the values
-      val bundle = Bundle()
-      bundle.putString(ARG_TEMPLATE_TYPE, templateType.name)
+      val bundle = bundleOf(ARG_TEMPLATE_TYPE to templateType.name)
       // 2 Add the bundle to fragment arguments
       fragment.arguments = bundle
       return fragment
