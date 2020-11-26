@@ -63,6 +63,7 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.core.content.contentValuesOf
 import androidx.core.os.bundleOf
 import androidx.core.view.drawToBitmap
+import androidx.core.view.get
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
@@ -308,7 +309,7 @@ class CollageFragment : Fragment(), View.OnClickListener {
   }
 
   private fun hideMenuItemDone(menu: Menu) {
-    menuDone = menu.getItem(0)
+    menuDone = menu[0]
     menuDone.isVisible = false
   }
 
