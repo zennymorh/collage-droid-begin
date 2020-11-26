@@ -60,7 +60,9 @@ import android.provider.MediaStore.Images.Media.DATE_TAKEN
 import android.provider.MediaStore.Images.Media.DATA
 import android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 import android.widget.Toast.LENGTH_LONG
+import androidx.core.content.contentValuesOf
 import androidx.core.os.bundleOf
+import androidx.core.view.drawToBitmap
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
@@ -202,11 +204,7 @@ class CollageFragment : Fragment(), View.OnClickListener {
   }
 
   private fun viewToBitmap(view: View): Bitmap {
-    val bitmap = Bitmap.createBitmap(view.width, view.height,
-        Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
-    view.draw(canvas)
-    return bitmap
+    return view.drawToBitmap()
   }
 
   private fun storeBitmap(context: Context, bitmap: Bitmap): Uri? {
@@ -250,14 +248,15 @@ class CollageFragment : Fragment(), View.OnClickListener {
   }
 
   private fun addImageToGallery(cr: ContentResolver, imgType: String, filepath: File): Uri? {
-    val values = ContentValues()
+
     val currentTime = System.currentTimeMillis()
     val fileString = filepath.toString()
 
-    values.put(MIME_TYPE, "image/$imgType")
-    values.put(DATE_ADDED, currentTime)
-    values.put(DATE_TAKEN, currentTime)
-    values.put(DATA, fileString)
+    val values = contentValuesOf(
+    MIME_TYPE to "image/$imgType",
+    DATE_ADDED to currentTime,
+    DATE_TAKEN to currentTime,
+    DATA to fileString)
     return cr.insert(EXTERNAL_CONTENT_URI, values)
   }
 
